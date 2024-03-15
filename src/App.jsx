@@ -24,23 +24,18 @@ let tasks = [
 ]
 
 function App() {
-  const [isCompleted, setIsCompleted] = useState(tasks)
+  const [task, setTask] = useState(tasks)
 
-  function handleCompleted(id) {
-    setIsCompleted(prevTasks =>
-      prevTasks.map((task) => {
-        if (task.id === id) {
-          return { ...task, completed: !task.completed }
-        }
-        return task
-      })
-    )
+  const handleCompleted = (index) => {
+    const newTasks = [...task]
+    newTasks[index].completed = !newTasks[index].completed
+    setTask(newTasks)
   }
 
   return (
     <>
       <h1>Task List</h1>
-      <TaskList tasks={isCompleted} handleCompleted={handleCompleted} />
+      <TaskList tasks={task} handleCompleted={handleCompleted} />
     </>
   )
 }

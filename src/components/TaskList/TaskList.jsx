@@ -8,8 +8,8 @@ export function TaskList({ tasks, handleCompleted }) {
       <div className='task-container'>
         <h2>Tareas completadas: {completedTasks}</h2>
         <hr />
-        {tasks.map(task => (
-          <Task key={task.id} id={task.id} title={task.title} completed={task.completed} deadline={task.deadline} handleCompleted={handleCompleted} />
+        {tasks.map((task, index) => (
+          <Task key={task.id} index={index} title={task.title} completed={task.completed} deadline={task.deadline} handleCompleted={handleCompleted} />
         ))}
       </div>
     </>

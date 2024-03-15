@@ -9,14 +9,13 @@ function dueDate(deadline) {
   return difference
 }
 
-export function Task({ id, title, deadline, completed, handleCompleted }) {
+export function Task({ title, deadline, completed, handleCompleted, index }) {
   let difference = dueDate(deadline)
 
-  console.log(completed)
   return (
     <div id='task-container'>
       <div id='info-container'>
-        <input type="checkbox" checked={completed} onChange={() => handleCompleted(id)} />
+        <input type="checkbox" checked={completed} onChange={() => handleCompleted(index)} />
         <p className='task-title' style={{ textDecoration: completed ? 'line-through' : 'none' }}>{title}</p>
       </div>
       <div>
