@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React from 'react'
 import './Task.css'
 
 function dueDate(deadline) {
@@ -6,35 +6,21 @@ function dueDate(deadline) {
   let days = new Date(deadlineDestructured[2], deadlineDestructured[1] - 1, deadlineDestructured[0])
   let today = new Date()
   let difference = Math.floor((days - today) / (1000 * 60 * 60 * 24)) + 1
-  let differenceText = difference === 1 ? 'día' : 'días'
-  return { difference, differenceText }
+  return difference
 }
 
-export function Task(props) {
-  const { title, deadline, completed } = props
-  const [checked, setChecked] = useState(completed)
-  let { difference, differenceText } = dueDate(deadline)
-  let message = ''
-  if (difference <= 0) {
-    message = `Hoy es la fecha de entrega.`
-    document.getElementById('messageDueDate').style.color = 'red'
-  } else if (difference > 1) {
-    message = `Faltan ${difference} ${differenceText}.`
-    document.getElementById('messageDueDate').style.color = 'orange'
-  } else if (difference > 3) {
-    message = `Faltan ${difference} ${differenceText}.`
-    document.getElementById('messageDueDate').style.color = 'green'
-  }
+export function Task({ id, title, deadline, completed, handleCompleted }) {
+  let difference = dueDate(deadline)
 
+  console.log(completed)
   return (
     <div id='task-container'>
       <div id='info-container'>
-        <input type="checkbox" checked={checked} onChange={() => setChecked(!checked)} />
-        <p className='task-title' style={{ textDecoration: checked ? 'line-through' : 'none' }}>{title}</p>
+        <input type="checkbox" checked={completed} onChange={() => handleCompleted(id)} />
+        <p className='task-title' style={{ textDecoration: completed ? 'line-through' : 'none' }}>{title}</p>
       </div>
       <div>
-        <p id="messageDueDate">{message}</p>
-        <p>{deadline}</p>
+        <p style={{ color: difference <= 0 ? 'red' : difference <= 2 ? 'orange' : 'green', textDecoration: completed ? 'line-through' : 'none' }} className='deadline'>{deadline}</p>
       </div>
     </div>
   )
